@@ -1,3 +1,4 @@
+<button (click)="changeState()">Show create form</button>
 <h1>Danh sách sản phẩm</h1>
 <table>
   <tr>
@@ -5,11 +6,15 @@
     <th>Name</th>
     <th>Price</th>
     <th>Description</th>
+    <th>Edit</th>
   </tr>
   <tr *ngFor="let product of products">
     <td>{{product.id}}</td>
     <td>{{product.name}}</td>
     <td>{{product.price}}</td>
     <td>{{product.description}}</td>
+    <td><button (click)="changeStateEditForm(product)">Edit</button></td>
   </tr>
 </table>
+<app-product-create *ngIf="isShowCreatedForm"></app-product-create>
+<app-product-edit *ngIf="isShowEditedForm" [product]="currentProduct" (editEvent)="editProduct($event)"></app-product-edit>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Product} from '../../model/product';
 
 @Component({
@@ -21,9 +21,34 @@ export class ProductListComponent implements OnInit {
       description: 'new'
     },
   ];
-  constructor() { }
+
+  isShowCreatedForm = false;
+  isShowEditedForm = false;
+  currentProduct: Product = {};
+
+  constructor() {
+  }
+
+  changeState() {
+    this.isShowCreatedForm = !this.isShowCreatedForm;
+  }
+
+  changeStateEditForm(product) {
+    this.isShowEditedForm = !this.isShowEditedForm;
+    this.currentProduct = product;
+  }
 
   ngOnInit() {
   }
 
+  editProduct(product) {
+    let index = -1;
+    for (let i = 0; i < this.products.length; i++) {
+      if (this.products[i].id == product.id) {
+        index = i;
+        break;
+      }
+    }
+    this.products[index] = product;
+  }
 }
