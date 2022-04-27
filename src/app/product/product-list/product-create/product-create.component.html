@@ -1,24 +1,32 @@
 <h1>Form create product</h1>
-<form (ngSubmit)="createProduct()">
+<form #productForm="ngForm" (ngSubmit)="createProduct(productForm)">
   <div>
     <label for="id">Id:</label>
-    <input type="number" id="id" name="id" [(ngModel)]="product.id">
+    <input type="number" id="id" name="id" #id='ngModel' required [(ngModel)]="product.id">
+    <p style="color: red" [hidden]="id.valid || !id.touched">Id is required</p>
   </div>
   <div>
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" [(ngModel)]="product.name">
+    <input type="text" id="name" name="name"
+           required
+           minlength="6"
+           maxlength="15"
+           #name="ngModel"
+           [(ngModel)]="product.name">
+    <div [hidden]="name.valid || !name.touched">
+      <div style="color: red" *ngIf="name.errors?.required">Name is required</div>
+      <div style="color: red" *ngIf="name.errors?.minlength">Minlength is 6</div>
+      <div style="color: red" *ngIf="name.errors?.maxlength">maxLength is 15</div>
+    </div>
+
   </div>
   <div>
     <label for="price">Price:</label>
-    <input type="text" id="price" name="price" [(ngModel)]="product.price">
+    <input type="text" id="price" name="price" required [(ngModel)]="product.price">
   </div>
   <div>
     <label for="description">Description:</label>
-    <input type="text" id="description" name="description" [(ngModel)]="product.description">
+    <input type="text" id="description" name="description" required [(ngModel)]="product.description">
   </div>
   <button>Submit</button>
 </form>
-<p>{{product.id}}</p>
-<p>{{product.name}}</p>
-<p>{{product.price}}</p>
-<p>{{product.description}}</p>

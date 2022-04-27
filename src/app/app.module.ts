@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ProductCreateComponent } from './product/product-list/product-create/product-create.component';
 import { ProductEditComponent } from './product/product-list/product-edit/product-edit.component';
 
@@ -18,7 +18,8 @@ import { ProductEditComponent } from './product/product-list/product-edit/produc
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
