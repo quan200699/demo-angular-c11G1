@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../../model/product';
+import {ProductService} from '../../service/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -7,48 +8,20 @@ import {Product} from '../../model/product';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  products: Product[] = [
-    {
-      id: 1,
-      name: 'IPhone 12',
-      price: 120000,
-      description: 'new'
-    },
-    {
-      id: 2,
-      name: 'IPhone 13',
-      price: 230000,
-      description: 'new'
-    },
-  ];
+  products: Product[] = [];
 
-  isShowCreatedForm = false;
-  isShowEditedForm = false;
-  currentProduct: Product = {};
-
-  constructor() {
+  constructor(private productService: ProductService) {
   }
 
-  changeState() {
-    this.isShowCreatedForm = !this.isShowCreatedForm;
-  }
-
-  changeStateEditForm(product) {
-    this.isShowEditedForm = !this.isShowEditedForm;
-    this.currentProduct = product;
+  getAllProduct() {
+    this.productService.getAll().subscribe((productsFromBE) => {
+      this.products = productsFromBE;
+    }, error => {
+      console.log(error);
+    });
   }
 
   ngOnInit() {
-  }
-
-  editProduct(product) {
-    let index = -1;
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id == product.id) {
-        index = i;
-        break;
-      }
-    }
-    this.products[index] = product;
+    this.getAllProduct();
   }
 }

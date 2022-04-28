@@ -1,4 +1,4 @@
-<button (click)="changeState()">Show create form</button>
+<a routerLink="/products/create">Tạo sản phẩm</a>
 <h1>Danh sách sản phẩm</h1>
 <table>
   <tr>
@@ -13,8 +13,6 @@
     <td>{{product.name}}</td>
     <td>{{product.price}}</td>
     <td>{{product.description}}</td>
-    <td><button (click)="changeStateEditForm(product)">Edit</button></td>
+    <td><a routerLink="/products/edit/{{product.id}}">Edit</a></td>
   </tr>
 </table>
-<app-product-create *ngIf="isShowCreatedForm"></app-product-create>
-<app-product-edit *ngIf="isShowEditedForm" [product]="currentProduct" (editEvent)="editProduct($event)"></app-product-edit>
