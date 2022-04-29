@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../../model/product';
-import {ProductService} from '../../service/product.service';
+import {ProductService} from '../../service/product/product.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-product-list',
@@ -13,15 +15,26 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: ProductService) {
   }
 
-  getAllProduct() {
-    this.productService.getAll().subscribe((productsFromBE) => {
-      this.products = productsFromBE;
-    }, error => {
-      console.log(error);
-    });
-  }
 
   ngOnInit() {
     this.getAllProduct();
   }
+
+  getAllProduct() {
+    this.productService.getAll().subscribe((productsFromBE) => {
+      this.products = productsFromBE;
+      $(function() {
+        $('#product-list').DataTable({
+          'paging': true,
+          'lengthChange': false,
+          'searching': false,
+          'ordering': true,
+          'info': true,
+          'autoWidth': false,
+        });
+      });
+    });
+
+  }
+
 }

@@ -1,28 +1,61 @@
-<a routerLink="/products">Danh sách sản phẩm</a>
-<h1>Form create product</h1>
-<form #productForm="ngForm" (ngSubmit)="createProduct(productForm)">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name"
-           required
-           minlength="6"
-           maxlength="15"
-           #name="ngModel"
-           [(ngModel)]="product.name">
-    <div [hidden]="name.valid || !name.touched">
-      <div style="color: red" *ngIf="name.errors?.required">Name is required</div>
-      <div style="color: red" *ngIf="name.errors?.minlength">Minlength is 6</div>
-      <div style="color: red" *ngIf="name.errors?.maxlength">maxLength is 15</div>
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Thêm mới sản phẩm</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a routerLink="/">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Thêm mới sản phẩm</li>
+        </ol>
+      </div>
     </div>
+  </div><!-- /.container-fluid -->
+</section>
 
-  </div>
-  <div>
-    <label for="price">Price:</label>
-    <input type="text" id="price" name="price" required [(ngModel)]="product.price">
-  </div>
-  <div>
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" required [(ngModel)]="product.description">
-  </div>
-  <button>Submit</button>
-</form>
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Thêm mới sản phẩm</h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form #productForm='ngForm' (ngSubmit)="createProduct(productForm)">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="name">Tên sản phẩm</label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.name"
+                       placeholder="Nhập tên sản phẩm">
+              </div>
+              <div class="form-group">
+                <label for="price">Giá sản phẩm</label>
+                <input type="text" class="form-control" id="price" name="price" [(ngModel)]="product.price"
+                       placeholder="Nhập giá sản phẩm">
+              </div>
+              <div class="form-group">
+                <label for="description">Mô tả sản phẩm</label>
+                <input type="text" class="form-control" id="description" name="description"
+                       [(ngModel)]="product.description" placeholder="Nhập mô tả sản phẩm">
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Tạo mới</button>
+            </div>
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!--/.col (left) -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</section>

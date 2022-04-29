@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from '../../model/product';
-import {ProductService} from '../../service/product.service';
+import {ProductService} from '../../service/product/product.service';
+import {NotificationService} from '../../service/notification/notification.service';
+
+declare var $: any;
+declare var Swal: any;
 
 @Component({
   selector: 'app-product-create',
@@ -10,7 +14,8 @@ import {ProductService} from '../../service/product.service';
 export class ProductCreateComponent implements OnInit {
   product: Product = {};
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -19,11 +24,14 @@ export class ProductCreateComponent implements OnInit {
   createProduct(productForm) {
     if (productForm.valid) {
       this.productService.createProduct(productForm.value).subscribe(() => {
-        alert('Thành công!');
-      }, error => console.log(error));
+         this.notificationService.showMessage('success', 'Tạo mới thành công!')
+        }, error => {
+        this.notificationService.showMessage('error', 'Tạo mới lỗi!')
+        }
+      );
       productForm.resetForm();
     } else {
-      alert('Xảy ra lỗi!');
+      this.notificationService.showMessage('error', 'Tạo mới lỗi!')
     }
   }
 }
