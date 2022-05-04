@@ -40,6 +40,13 @@
                        placeholder="Nhập giá sản phẩm">
               </div>
               <div class="form-group">
+                <label for="category">Danh mục sản phẩm</label>
+                <select class="form-control" name="category" id="category" [(ngModel)]="product.category">
+                  <option disabled [ngValue]="null">Chọn danh mục sản phẩm</option>
+                  <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="description">Mô tả sản phẩm</label>
                 <input type="text" class="form-control" id="description" name="description"
                        [(ngModel)]="product.description" placeholder="Nhập mô tả sản phẩm">

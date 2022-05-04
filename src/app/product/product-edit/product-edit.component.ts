@@ -3,6 +3,8 @@ import {Product} from '../../model/product';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '../../service/product/product.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {CategoryService} from '../../service/category/category.service';
+import {Category} from '../../model/category';
 
 @Component({
   selector: 'app-product-edit',
@@ -11,16 +13,19 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 })
 export class ProductEditComponent implements OnInit {
   product: Product = {};
+  categories: Category[] = [];
 
   productForm: FormGroup = new FormGroup({
     id: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]),
     price: new FormControl('', [Validators.required]),
+    category: new FormControl(null),
     description: new FormControl('', Validators.required)
   });
 
   constructor(private productService: ProductService,
               private activatedRoute: ActivatedRoute,
+              private categoryService: CategoryService,
               private router: Router) {
     //router => đối tượng giúp chuyển trang bên phía ts
     //ActivatedRoute => để lấy giá trị của biến trên đường dẫn
@@ -32,6 +37,10 @@ export class ProductEditComponent implements OnInit {
 
   get idControl() {
     return this.productForm.get('id');
+  }
+
+  get categoryControl() {
+    return this.productForm.get('category');
   }
 
   get nameControl() {
@@ -46,6 +55,10 @@ export class ProductEditComponent implements OnInit {
     return this.productForm.get('description');
   }
 
+  getAllCategory(){
+    this.categoryService.getAllCategory().subscribe(listCategory => this.categories = listCategory);
+  }
+
   getProductById(id) {
     this.productService.getProductById(id).subscribe(productBE => {
       this.product = productBE;
@@ -53,10 +66,12 @@ export class ProductEditComponent implements OnInit {
       this.nameControl.setValue(this.product.name);
       this.priceControl.setValue(this.product.price);
       this.descriptionControl.setValue(this.product.description);
+      this.categoryControl.setValue(this.product.category.id);
     });
   }
 
   ngOnInit() {
+    this.getAllCategory();
   }
 
   submit() {
